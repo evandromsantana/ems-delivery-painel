@@ -6,6 +6,9 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
+import ReactDOM from "react-dom";
+import { ThemeProviderWrapper } from "@/_components/ThemeContext";
+
 import {
   AppBar,
   Toolbar,
@@ -23,6 +26,8 @@ import { grey } from "@mui/material/colors";
 
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
+
+import { useTheme } from "@/_components/ThemeContext";
 
 const lightTheme = createTheme({
   palette: {
@@ -87,13 +92,17 @@ const Layout = ({ children }: Props) => {
   };
 
   const getLogoSrc = () => {
-    return theme.palette.mode === "dark" ? "/logo-dark.svg" : "/logo-light.svg";
+    if (theme.palette.mode === "light") {
+      return "/logo-light.svg";
+    } else {
+      return "./logo-dark.svg";
+    }
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <html lang="pt-br">
-        <body>
+    <html lang="pt-br">
+      <body>
+        <ThemeProvider theme={theme}>
           <CssBaseline />
           <AppBar position="static">
             <Toolbar>
@@ -192,9 +201,9 @@ const Layout = ({ children }: Props) => {
               {children}
             </Box>
           </Container>
-        </body>
-      </html>
-    </ThemeProvider>
+        </ThemeProvider>
+      </body>
+    </html>
   );
 };
 
