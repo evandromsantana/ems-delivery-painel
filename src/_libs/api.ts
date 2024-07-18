@@ -1,6 +1,3 @@
-import { error } from "console";
-import { resolve } from "path";
-
 export const api = {
   login: async (
     email: string,
@@ -17,6 +14,16 @@ export const api = {
     });
   },
   forgotPassword: async (email: string): Promise<{ error: string }> => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({ error: "" });
+      }, 1000);
+    });
+  },
+  redifinePassword: async (
+    password: string,
+    token: string
+  ): Promise<{ error: string }> => {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve({ error: "" });

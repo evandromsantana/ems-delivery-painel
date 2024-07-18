@@ -5,6 +5,7 @@ import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
+import { Header } from "@/_components/Header";
 
 import {
   AppBar,
@@ -93,74 +94,9 @@ const Layout = ({ children }: Props) => {
     <html lang="pt-br">
       <body style={{ margin: 0 }}>
         <ThemeProvider theme={theme}>
-          <CssBaseline />
-
-          <Toolbar
-            style={{
-              display: "flex",
-              alignItems: "center",
-              flexDirection: "row-reverse",
-            }}
-          >
-            <Grid item>
-              {/* Button */}
-              <IconButton
-                size="small"
-                edge="end"
-                color="inherit"
-                onClick={toggleTheme}
-                style={{
-                  backgroundColor:
-                    theme.palette.mode === "dark" ? "#303f9f" : "#90caf9",
-                }}
-              >
-                {React.cloneElement(icon, { style: { color: iconColor } })}
-              </IconButton>
-            </Grid>
-          </Toolbar>
-
-          <Container component="main" maxWidth="xs">
-            <Box
-              sx={{
-                mt: 8,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <Box
-                sx={{
-                  filter: "drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5))",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  marginBottom: "10px",
-                }}
-              >
-                <img
-                  src={getLogoSrc()}
-                  alt="Logo"
-                  width={170}
-                  className="logo"
-                />
-
-                <Typography variant="h3" marginLeft={1}>
-                  - Delivery
-                </Typography>
-              </Box>
-
-              <Typography
-                component="h5"
-                variant="h5"
-                sx={{
-                  filter: "drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5))",
-                }}
-              >
-                Painel do estabelecimento
-              </Typography>
-
-              {children}
-            </Box>
+          <Header />
+          <Container component="section" maxWidth="lg">
+            {children}
           </Container>
         </ThemeProvider>
       </body>

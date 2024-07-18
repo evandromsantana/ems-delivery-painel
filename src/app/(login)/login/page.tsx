@@ -9,6 +9,7 @@ import {
   Typography,
   Alert,
   Link as MuiLink,
+  LinearProgress,
 } from "@mui/material";
 
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
@@ -75,7 +76,13 @@ const Page = () => {
           disabled={loading}
           endIcon={<ExitToAppIcon />}
         >
-          {loading ? "Carregando..." : "Entrar"}
+          {loading ? (
+            <Box sx={{ width: "100%" }}>
+              <LinearProgress />
+            </Box>
+          ) : (
+            "Entrar"
+          )}
         </Button>
 
         {error && (
