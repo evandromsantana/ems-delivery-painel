@@ -1,6 +1,9 @@
 "use client";
 
-import { Menu } from "@mui/icons-material";
+import React from "react";
+import { useState } from "react";
+import Link from "next/link";
+import { Margin, Menu } from "@mui/icons-material";
 import {
   AppBar,
   Box,
@@ -9,20 +12,17 @@ import {
   Toolbar,
   Typography,
   Grid,
-  Container,
   CssBaseline,
 } from "@mui/material";
 
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { grey } from "@mui/material/colors";
-import { useState } from "react";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import React from "react";
+import { HeaderDrawer } from "./HeaderDrawer";
 
 const lightTheme = createTheme({
   palette: {
@@ -64,20 +64,19 @@ const darkTheme = createTheme({
   },
 });
 
-type Props = {
-  children: React.ReactNode;
-};
-
 export const Header = () => {
   const router = useRouter();
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
-  const pageTitle = "Painel Delivery";
+  const pageTitle = " Painel Delivery";
 
   const handleLogout = () => {
     router.push("/login");
   };
 
-  const handleDrowerToggle = () => {};
+  const handleDrowerToggle = () => {
+    setDrawerOpen(!drawerOpen);
+  };
 
   const [theme, setTheme] = useState(lightTheme);
   const [icon, setIcon] = useState(<LightModeIcon />);
@@ -121,13 +120,11 @@ export const Header = () => {
               sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
             >
               {/* Logo */}
-
               <Link
                 href="/"
                 style={{
                   color: "#FFF",
                   alignItems: "center",
-                  justifyContent: "center",
                   textDecoration: "none",
                   filter: "drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.5))",
                 }}
@@ -137,13 +134,6 @@ export const Header = () => {
                   alt="Logo"
                   width={80}
                   className="logo"
-                  style={{
-                    marginRight: "4px",
-                    boxShadow:
-                      theme.palette.mode === "dark" ? "0 0 10px #000" : "none",
-                    border:
-                      theme.palette.mode === "dark" ? "1px solid #ccc" : "none",
-                  }}
                 />
                 {pageTitle}
               </Link>
@@ -170,16 +160,36 @@ export const Header = () => {
                 color="inherit"
                 onClick={toggleTheme}
                 style={{
-                  marginRight: "2px",
+                  marginRight: "4px",
+                  padding: "4px",
                   backgroundColor:
-                    theme.palette.mode === "dark" ? "#303f9f" : "#fff",
+                    theme.palette.mode === "dark" ? "#303f9f" : "#bbdefb",
+                  borderRadius: "50%",
+                  transition: "all 0.3s",
                 }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.backgroundColor = "#fa8f04")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.backgroundColor =
+                    theme.palette.mode === "dark" ? "#303f9f" : "#bbdefb")
+                }
               >
-                {React.cloneElement(icon, { style: { color: iconColor } })}
+                {React.cloneElement(icon, {
+                  style: { fontSize: "18px", color: iconColor },
+                })}
               </IconButton>
             </Grid>
           </Toolbar>
         </AppBar>
+        <Box component="nav">
+          <HeaderDrawer
+            open={drawerOpen}
+            onClose={handleDrowerToggle}
+            title={pageTitle}
+            onLogout={handleLogout}
+          />
+        </Box>
       </ThemeProvider>
     </>
   );
