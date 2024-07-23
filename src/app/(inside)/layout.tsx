@@ -7,16 +7,7 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import { Header } from "@/_components/Header";
 
-import {
-  AppBar,
-  Toolbar,
-  IconButton,
-  Grid,
-  Container,
-  Box,
-  Typography,
-  CssBaseline,
-} from "@mui/material";
+import { Container } from "@mui/material";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { grey } from "@mui/material/colors";

@@ -1,8 +1,12 @@
 "use client";
 
-import { OrderItem } from "@/_components/OrderItem";
+import { useEffect, useState } from "react";
 import { api } from "@/_libs/api";
+
 import { Order } from "@/types/Order";
+import { OrderStatus } from "@/types/OrderStatus";
+
+import { OrderItem } from "@/_components/OrderItem";
 import { Refresh, Search } from "@mui/icons-material";
 import {
   Box,
@@ -14,7 +18,6 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
 
 const Page = () => {
   const [searchInput, setSerchInput] = useState("");
@@ -37,6 +40,11 @@ const Page = () => {
   const handleSearchInput = () => {};
 
   const handleSearchKey = () => {};
+
+  const handleChangeStatus = async (id: number, newStatus: OrderStatus) => {
+    await api.changeOrderStatus(id, newStatus);
+    getOrders();
+  };
 
   return (
     <Box sx={{ my: 3 }}>
@@ -99,7 +107,7 @@ const Page = () => {
         {!loading &&
           orders.map((item, index) => (
             <Grid key={index} item xs={1}>
-              <OrderItem item={item} />
+              <OrderItem item={item} onchangeStatus={handleChangeStatus} />
             </Grid>
           ))}
       </Grid>
