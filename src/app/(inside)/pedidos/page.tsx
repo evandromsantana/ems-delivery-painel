@@ -13,6 +13,7 @@ import {
   Box,
   Button,
   CircularProgress,
+  CssBaseline,
   Grid,
   InputAdornment,
   Skeleton,
@@ -78,6 +79,8 @@ const Page = () => {
 
   return (
     <>
+      {/* TODO: Depois ver theme */}
+      <CssBaseline />
       <Box sx={{ my: 3, displayPrint: "none" }}>
         <Box sx={{ mb: 3, display: "flex", justifyContent: "space-between" }}>
           <Box sx={{ display: "flex", alignItems: "center" }}>
