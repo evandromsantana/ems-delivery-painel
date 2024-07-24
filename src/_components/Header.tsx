@@ -102,7 +102,11 @@ export const Header = () => {
     <>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <AppBar component="nav" position="relative">
+        <AppBar
+          component="nav"
+          position="relative"
+          sx={{ displayPrint: "none" }}
+        >
           <Toolbar style={{ justifyContent: "space-between" }}>
             <IconButton
               color="inherit"
