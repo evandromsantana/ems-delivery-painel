@@ -27,9 +27,25 @@ import {
   Typography,
 } from "@mui/material";
 import { dateFormat } from "@/_libs/dateFormat";
+import { Product } from "@/types/Product";
+import { Category } from "@/types/Category";
+import { ProductTableSkeleton } from "@/_components/ProductTableSkeleton";
 
 const Page = () => {
   const [loading, setLoading] = useState(false);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  useEffect(() => {
+    getProducts();
+  }, []);
+
+  const getProducts = async () => {
+    setLoading(true);
+    setProducts(await api.getProducts());
+    setCategories(await api.getCategories());
+    setLoading(false);
+  };
 
   const handleNewProduct = () => {};
 
@@ -63,7 +79,15 @@ const Page = () => {
               <TableCell sx={{ xs: 50, md: 130 }}>Ações</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody></TableBody>
+          <TableBody>
+            {loading && (
+              <>
+                <ProductTableSkeleton />
+                <ProductTableSkeleton />
+                <ProductTableSkeleton />
+              </>
+            )}
+          </TableBody>
         </Table>
       </Box>
     </>
