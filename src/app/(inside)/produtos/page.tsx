@@ -15,6 +15,11 @@ import {
   Button,
   CircularProgress,
   CssBaseline,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Grid,
   InputAdornment,
   Skeleton,
@@ -30,11 +35,16 @@ import { dateFormat } from "@/_libs/dateFormat";
 import { Product } from "@/types/Product";
 import { Category } from "@/types/Category";
 import { ProductTableSkeleton } from "@/_components/ProductTableSkeleton";
+import { ProductTableItem } from "@/_components/ProductTableItem";
 
 const Page = () => {
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
+
+  const [showDeleteDialog, setshowDeleteDialog] = useState(false);
+  const [productToDelete, setProductToDelete] = useState<Product>();
+  const [loadingDelete, setLoadingDelete] = useState(false);
 
   useEffect(() => {
     getProducts();
@@ -48,6 +58,24 @@ const Page = () => {
   };
 
   const handleNewProduct = () => {};
+
+  const handleEditProduct = (product: Product) => {};
+
+  // Delete Product
+  const handleDeleteProduct = (product: Product) => {
+    setProductToDelete(product);
+    setshowDeleteDialog(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (productToDelete) {
+      setLoadingDelete(true);
+      await api.deleteProduct(productToDelete.id);
+      setLoadingDelete(false);
+      setshowDeleteDialog(false);
+      getProducts();
+    }
+  };
 
   return (
     <>
@@ -76,7 +104,7 @@ const Page = () => {
               <TableCell sx={{ display: { xs: "none", md: "table-cell" } }}>
                 Categoria
               </TableCell>
-              <TableCell sx={{ xs: 50, md: 130 }}>Ações</TableCell>
+              <TableCell sx={{ width: { xs: 50, md: 130 } }}>Ações</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -87,8 +115,42 @@ const Page = () => {
                 <ProductTableSkeleton />
               </>
             )}
+            {!loading &&
+              products.map((item) => (
+                <ProductTableItem
+                  key={item.id}
+                  item={item}
+                  onEdit={handleEditProduct}
+                  onDelete={handleDeleteProduct}
+                />
+              ))}
           </TableBody>
         </Table>
+
+        <Dialog
+          open={showDeleteDialog}
+          onClose={() => (!loadingDelete ? setshowDeleteDialog(false) : null)}
+        >
+          <DialogTitle>
+            Tem certeza que deseja deletar este produto?
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Não é possível voltar atrás após confirmar esta ação.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              disabled={loadingDelete}
+              onClick={() => setshowDeleteDialog(false)}
+            >
+              Não
+            </Button>
+            <Button disabled={loadingDelete} onClick={handleConfirmDelete}>
+              Sim
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Box>
     </>
   );

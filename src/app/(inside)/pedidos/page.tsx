@@ -48,7 +48,10 @@ const Page = () => {
   }, [orders]);
 
   const handleSearchKey = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.code.toLowerCase() === "enter") {
+    if (
+      event.code.toLowerCase() === "enter" ||
+      event.code.toLowerCase() === "numpadenter"
+    ) {
       if (searchInput != "") {
         let newOrders: Order[] = [];
 

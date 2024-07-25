@@ -114,11 +114,23 @@ export const api = {
       { ...tmpProduct, id: 128 },
       { ...tmpProduct, id: 129 },
       { ...tmpProduct, id: 130 },
+      { ...tmpProduct, id: 131 },
+      { ...tmpProduct, id: 132 },
+      { ...tmpProduct, id: 133 },
+      { ...tmpProduct, id: 134 },
+      { ...tmpProduct, id: 135 },
     ];
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve(list);
       }, 500);
+    });
+  },
+  deleteProduct: async (id: number): Promise<boolean> => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(true);
+      }, 1000);
     });
   },
 };
